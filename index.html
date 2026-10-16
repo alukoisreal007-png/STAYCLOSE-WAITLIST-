@@ -9,18 +9,22 @@
   <meta name="title" content="StayClose: stay close to them, right inside WhatsApp">
   <meta name="description" content="Stay close to them, right inside WhatsApp. Gentle reminders and a 10-second daily check-in for you and your partner. Nothing new to install.">
 
+  <!-- Favicon & Touch Icon -->
+  <link rel="icon" type="image/png" href="images/stayclose-app-icon-1024.png">
+  <link rel="apple-touch-icon" href="images/stayclose-app-icon-1024.png">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://couplesapp.example.com/">
   <meta property="og:title" content="StayClose: stay close to them, right inside WhatsApp">
   <meta property="og:description" content="Gentle reminders and a 10-second daily check-in for you and your partner. Mutual, private, no spying.">
-  <meta property="og:image" content="./hero-accent.png">
+  <meta property="og:image" content="images/stayclose-app-icon-1024.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:title" content="StayClose: stay close to them, right inside WhatsApp">
   <meta property="twitter:description" content="Gentle reminders and a 10-second daily check-in for you and your partner. Mutual, private, no spying.">
-  <meta property="twitter:image" content="./hero-accent.png">
+  <meta property="twitter:image" content="images/stayclose-app-icon-1024.png">
 
   <!-- Google Font: EB Garamond -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -242,6 +246,15 @@
       font-weight: 800;
       letter-spacing: -0.01em;
       color: #FFFFFF;
+    }
+
+    .card-brand-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
 
     .card-brand-icon {
@@ -1238,7 +1251,7 @@
         <!-- Card Top Bar -->
         <div class="card-top-nav">
           <div class="card-brand">
-            <div class="card-brand-icon">♡</div>
+            <img src="images/stayclose-app-icon-1024.png" alt="StayClose logo" class="card-brand-logo" width="28" height="28">
             <span>StayClose</span>
           </div>
         </div>
@@ -1699,8 +1712,8 @@
   <!-- ========================================================================= -->
   <footer class="site-footer">
     <div class="container">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; font-weight: 800; font-size: 1.25rem;">
-        <svg class="svg-icon" style="color: var(--accent-coral);" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; font-weight: 800; font-size: 1.35rem;">
+        <img src="images/stayclose-app-icon-1024.png" alt="StayClose" width="28" height="28" style="border-radius: 8px; display: inline-block; box-shadow: 0 2px 6px rgba(43, 27, 46, 0.12);">
         <span>StayClose</span>
       </div>
       <p style="font-size: 0.88rem;">A shared, mutual sanctuary for couples.</p>
