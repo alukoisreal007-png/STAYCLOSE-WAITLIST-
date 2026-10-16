@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>StayClose: stay close to them, right inside WhatsApp</title>
+  <meta name="title" content="StayClose: stay close to them, right inside WhatsApp">
+  <meta name="description" content="Stay close to them, right inside WhatsApp. Gentle reminders and a 10-second daily check-in for you and your partner. Nothing new to install.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://couplesapp.example.com/">
+  <meta property="og:title" content="StayClose: stay close to them, right inside WhatsApp">
+  <meta property="og:description" content="Gentle reminders and a 10-second daily check-in for you and your partner. Mutual, private, no spying.">
+  <meta property="og:image" content="./hero-accent.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="StayClose: stay close to them, right inside WhatsApp">
+  <meta property="twitter:description" content="Gentle reminders and a 10-second daily check-in for you and your partner. Mutual, private, no spying.">
+  <meta property="twitter:image" content="./hero-accent.png">
+
+  <!-- Google Font: EB Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & BASE CONFIGURATION
+       Background: #FFF8F1 | Text: #2B1B2E | Accent Coral: #FF7A6B
+       Secondary Sage: #7FB5A8 | Highlight Gold: #F4C26B
+       ========================================================================== */
+    :root {
+      --bg-cream: #FFF8F1;
+      --bg-white: #FFFFFF;
+      --text-main: #2B1B2E;
+      --text-muted: #645469;
+      --accent-coral: #FF7A6B;
+      --accent-coral-hover: #F06859;
+      --accent-coral-light: #FFEAE7;
+      --secondary-sage: #7FB5A8;
+      --secondary-sage-light: #EBF5F3;
+      --secondary-sage-dark: #437368;
+      --highlight-gold: #F4C26B;
+      --highlight-gold-light: #FEF7EA;
+      --border-subtle: #F0E5D8;
+      --shadow-soft: 0 10px 30px -5px rgba(43, 27, 46, 0.05), 0 4px 12px -2px rgba(43, 27, 46, 0.03);
+      --shadow-hover: 0 20px 40px -10px rgba(43, 27, 46, 0.09), 0 8px 18px -4px rgba(43, 27, 46, 0.04);
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'EB Garamond', Georgia, serif;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-weight: 500;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-bottom: 74px; /* Space for sticky mobile CTA */
+    }
+
+    input, button, select, textarea {
+      font-family: 'EB Garamond', Georgia, serif;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--text-main);
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    p {
+      color: var(--text-muted);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .container-narrow {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Primary Coral Button */
+    .btn-coral {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: var(--accent-coral);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1.02rem;
+      padding: 15px 30px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 24px -4px rgba(255, 122, 107, 0.4);
+      transition: all 0.25s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-coral:hover {
+      background-color: var(--accent-coral-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -4px rgba(255, 122, 107, 0.5);
+    }
+
+    .btn-coral:active {
+      transform: translateY(0);
+    }
+
+    .btn-coral:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* SVG utility */
+    .svg-icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       SECTION 1: HERO (RECREATING THE GLASSMORPHIC CARD TERMINAL FROM THE IMAGE)
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      padding: 36px 0 72px 0;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 20%, #FFEFE8 0%, var(--bg-cream) 60%);
+    }
+
+    /* Ambient glowing canvas in background */
+    #heroCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* The Centerpiece: Replicating the exact Floating Glassmorphic Window from the Neonix image */
+    .neonix-glass-card {
+      position: relative;
+      z-index: 2;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(38, 11, 22, 0.94) 0%, rgba(48, 14, 28, 0.88) 50%, rgba(22, 6, 14, 0.96) 100%);
+      border: 1px solid rgba(255, 122, 107, 0.28);
+      box-shadow: 0 32px 70px -15px rgba(24, 6, 14, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      color: #FFFFFF;
+    }
+
+    /* Subtle concentric arcs overlay inside the card to mirror the reference artwork */
+    .card-ambient-arcs {
+      position: absolute;
+      right: -100px;
+      top: -60px;
+      width: 680px;
+      height: 680px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 122, 107, 0.14);
+      box-shadow: 
+        0 0 0 60px rgba(255, 122, 107, 0.08),
+        0 0 0 130px rgba(255, 122, 107, 0.05),
+        0 0 0 210px rgba(255, 122, 107, 0.03);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .card-ambient-arcs {
+        width: 760px;
+        height: 760px;
+        border: 2px solid rgba(255, 122, 107, 0.32);
+        box-shadow: 
+          0 0 0 60px rgba(255, 122, 107, 0.16),
+          0 0 0 130px rgba(255, 122, 107, 0.10),
+          0 0 0 220px rgba(255, 122, 107, 0.05);
+      }
+    }
+
+    /* Card Top Nav Bar (Like the reference image) */
+    .card-top-nav {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+    }
+
+    .card-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+    }
+
+    .card-brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent-coral);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .card-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #FFC5BC;
+    }
+
+    .card-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-coral);
+      box-shadow: 0 0 8px var(--accent-coral);
+    }
+
+    /* Card Content Grid (Split 2-Column: Left = Text/CTA, Right = Phone Mockup in the open space) */
+    .card-body-grid {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      padding: 36px 28px 44px 28px;
+      gap: 36px;
+    }
+
+    @media (min-width: 900px) {
+      .card-body-grid {
+        grid-template-columns: 1fr 1.22fr;
+        padding: 56px 44px;
+        gap: 40px;
+      }
+    }
+
+    /* Left Column: Squeezed headline + subhead + CTA */
+    .hero-left-content {
+      text-align: left;
+    }
+
+    .hero-badge-small {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #FF9B8E;
+      margin-bottom: 16px;
+    }
+
+    /* Headline replacing NEONIX */
+    .hero-headline {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.03em;
+      line-height: 1.16;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (min-width: 768px) {
+      .hero-headline {
+        font-size: 3.35rem;
+      }
+    }
+
+    /* Subhead under headline */
+    .hero-subhead {
+      font-size: 1.08rem;
+      color: #EFE2F2;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 34px;
+      max-width: 540px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-subhead {
+        font-size: 1.25rem;
+      }
+    }
+
+    .hero-cta-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-guarantee {
+      font-size: 0.85rem;
+      color: #D6C4DC;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Right Column: Phone Mockup positioned in the open curved glow space */
+    .hero-right-space {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    .hero-phone-mockup {
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-phone-mockup picture {
+      display: block;
+      width: 100%;
+    }
+
+    .hero-phone-mockup img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.48));
+    }
+
+    @media (max-width: 640px) {
+      .hero-phone-mockup picture {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Card Bottom Bar (Like the player bar in the reference Neonix UI) */
+    .card-bottom-bar {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(18, 4, 12, 0.45);
+      font-size: 0.82rem;
+      color: #D3BFD7;
+    }
+
+    .card-bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--secondary-sage);
+      box-shadow: 0 0 10px var(--secondary-sage);
+    }
+
+    .card-bottom-socials {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: #FFC0B8;
+    }
+
+    /* ==========================================================================
+       SECTION 2: PROBLEM (3 relatable lines)
+       ========================================================================== */
+    .problem-section {
+      padding: 84px 0;
+      background-color: #FFFFFF;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section-eyebrow {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--secondary-sage-dark);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 2.6rem;
+      }
+    }
+
+    .problem-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 52px auto;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 940px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .problem-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .problem-card {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      text-align: left;
+    }
+
+    .problem-number {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--accent-coral);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .problem-line {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    @media (min-width: 768px) {
+      .problem-line {
+        font-size: 1.15rem;
+        line-height: 1.65;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 3: HOW IT WORKS (3 steps)
+       ========================================================================== */
+    .how-section {
+      padding: 96px 0;
+      background: var(--bg-cream);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 52px;
+    }
+
+    @media (min-width: 768px) {
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .step-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.25s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      background: var(--secondary-sage-light);
+      color: var(--secondary-sage-dark);
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    .step-card p {
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 768px) {
+      .step-card p {
+        font-size: 1.08rem;
+        line-height: 1.65;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 4: FEATURES (4 cards)
+       ========================================================================== */
+    .features-section {
+      padding: 96px 0;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 52px;
+    }
+
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .feature-card {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 38px 32px;
+      transition: all 0.25s ease;
+    }
+
+    .feature-card:hover {
+      background: #FFFFFF;
+      border-color: var(--accent-coral);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .feature-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-coral);
+      margin-bottom: 22px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    @media (min-width: 768px) {
+      .feature-card p {
+        font-size: 1.08rem;
+        line-height: 1.68;
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 5: TRUST BLOCK
+       ========================================================================== */
+    .trust-section {
+      padding: 84px 0;
+      background: var(--secondary-sage-light);
+      border-bottom: 1px solid rgba(127, 181, 168, 0.3);
+      text-align: center;
+    }
+
+    .trust-box {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .trust-badge-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      background: #FFFFFF;
+      color: var(--secondary-sage-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(79, 130, 118, 0.15);
+    }
+
+    .trust-statement {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .trust-statement {
+        font-size: 2.2rem;
+      }
+    }
+
+    .trust-sub {
+      font-size: 1.05rem;
+      color: var(--secondary-sage-dark);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       SECTION 6: FOUNDER NOTE
+       ========================================================================== */
+    .founder-section {
+      padding: 96px 0;
+      background: var(--bg-cream);
+    }
+
+    .founder-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 44px 30px;
+      box-shadow: var(--shadow-soft);
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .founder-card {
+        padding: 56px 48px;
+      }
+    }
+
+    .founder-quote-mark {
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--highlight-gold);
+      font-family: Georgia, serif;
+      margin-bottom: 14px;
+    }
+
+    .founder-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-main);
+      margin-bottom: 28px;
+    }
+
+    .founder-signoff {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+    }
+
+    .founder-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--highlight-gold-light);
+      border: 2px solid var(--highlight-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+    }
+
+    .founder-meta strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 1.02rem;
+    }
+
+    .founder-meta span {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       SECTION 7: WAITLIST FORM
+       ========================================================================== */
+    .waitlist-section {
+      padding: 96px 0;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .form-wrapper {
+      background: var(--bg-cream);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px 24px;
+      box-shadow: var(--shadow-hover);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .form-wrapper {
+        padding: 52px 48px;
+      }
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      background: #FFFFFF;
+      font-size: 0.98rem;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent-coral);
+      box-shadow: 0 0 0 3px rgba(255, 122, 107, 0.2);
+    }
+
+    .form-input.form-input-error {
+      border-color: #E53E3E !important;
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.18) !important;
+    }
+
+    .field-error-msg {
+      display: none;
+      color: #E53E3E;
+      font-size: 0.82rem;
+      margin-top: 6px;
+      font-weight: 600;
+      line-height: 1.4;
+      animation: fadeInError 0.15s ease-in;
+    }
+
+    @keyframes fadeInError {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    /* Phone input with country code dropdown */
+    .phone-input-group {
+      position: relative;
+      display: flex;
+      width: 100%;
+    }
+
+    .country-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-top-left-radius: var(--radius-sm);
+      border-bottom-left-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .country-select-btn:hover {
+      background: var(--bg-cream);
+    }
+
+    .country-select-btn:focus-visible {
+      outline: none;
+      border-color: var(--accent-coral);
+    }
+
+    .flag-icon {
+      width: 22px;
+      height: 16px;
+      object-fit: cover;
+      border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .dropdown-chevron {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: var(--text-muted);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
+
+    .country-select-btn[aria-expanded="true"] .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+
+    .phone-input-group .phone-number-input {
+      flex: 1;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .country-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 320px;
+      max-width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: 0 16px 36px -6px rgba(43, 27, 46, 0.16), 0 4px 12px -2px rgba(43, 27, 46, 0.08);
+      z-index: 60;
+      overflow: hidden;
+      animation: dropdownFadeIn 0.18s ease-out;
+    }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .country-search-box {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-cream);
+    }
+
+    .country-search-box input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-size: 0.88rem;
+      outline: none;
+      background: #FFFFFF;
+      color: var(--text-main);
+      font-family: inherit;
+    }
+
+    .country-search-box input:focus {
+      border-color: var(--accent-coral);
+    }
+
+    .country-list {
+      list-style: none;
+      margin: 0;
+      padding: 4px 0;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .country-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 14px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      transition: background 0.15s ease;
+    }
+
+    .country-item:hover, .country-item.highlighted {
+      background: var(--bg-cream);
+    }
+
+    .country-item.selected {
+      background: var(--accent-coral-light);
+      font-weight: 700;
+    }
+
+    .country-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .country-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .country-dial {
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-left: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Anti-Spam Honeypot Field */
+    .honeypot-field {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      pointer-events: none;
+    }
+
+    .consent-wrapper {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 26px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .consent-checkbox {
+      margin-top: 3px;
+      accent-color: var(--accent-coral);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Instant Success Card */
+    .success-card {
+      display: none;
+      text-align: center;
+      padding: 24px 12px;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--secondary-sage-light);
+      color: var(--secondary-sage-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+    }
+
+    .share-partner-btn {
+      margin-top: 24px;
+      background: var(--secondary-sage);
+      color: white;
+      font-weight: 700;
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.98rem;
+      transition: all 0.2s ease;
+    }
+
+    .share-partner-btn:hover {
+      background: var(--secondary-sage-dark);
+    }
+
+    /* ==========================================================================
+       SECTION 8: FAQ
+       ========================================================================== */
+    .faq-section {
+      padding: 96px 0;
+      background: var(--bg-cream);
+    }
+
+    .faq-list {
+      max-width: 740px;
+      margin: 48px auto 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .faq-item:hover {
+      box-shadow: var(--shadow-soft);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 22px 24px;
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .faq-chevron {
+      transition: transform 0.25s ease;
+      color: var(--accent-coral);
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 24px 24px 24px;
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-item.active .faq-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       SECTION 9: FOOTER
+       ========================================================================== */
+    .site-footer {
+      padding: 56px 0 40px 0;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin: 20px 0 28px 0;
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent-coral);
+    }
+
+    /* ==========================================================================
+       STICKY MOBILE CTA
+       ========================================================================== */
+    .sticky-mobile-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      background: rgba(255, 248, 241, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 18px;
+      border-top: 1px solid var(--border-subtle);
+      box-shadow: 0 -4px 16px rgba(43, 27, 46, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+      .sticky-mobile-cta {
+        display: none;
+      }
+    }
+
+    .sticky-mobile-cta .btn-coral {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 0.98rem;
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 50%;
+      border-top-color: #FFFFFF;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- 1. HERO SECTION (RECREATED AS THE FLOATING GLASS CARD TERMINAL) -->
+  <!-- ========================================================================= -->
+  <section class="hero-section">
+    
+    <!-- QUALITY RULES Canvas: High-DPI Glowing Crimson Waves in Ambient Space -->
+    <canvas id="heroCanvas" aria-hidden="true"></canvas>
+
+    <div class="container">
+      
+      <!-- THE FLOATING GLASSMORPHIC TERMINAL (Modeled directly on the Neonix UI Card) -->
+      <div class="neonix-glass-card">
+        
+        <!-- Subtle concentric background glow rings from the original image -->
+        <div class="card-ambient-arcs" aria-hidden="true"></div>
+
+        <!-- Card Top Bar -->
+        <div class="card-top-nav">
+          <div class="card-brand">
+            <div class="card-brand-icon">♡</div>
+            <span>StayClose</span>
+          </div>
+        </div>
+
+        <!-- Card Split Body: Left = Headline/Subhead/CTA, Right = Phone Mockup in the open glow space -->
+        <div class="card-body-grid">
+          
+          <!-- LEFT COLUMN: Squeezed headline + subhead + CTA (Replaces "NEONIX") -->
+          <div class="hero-left-content">
+            <span class="hero-badge-small">A Private Sanctuary for Couples</span>
+            
+            <h1 class="hero-headline">
+              Stay close to them, right inside WhatsApp.
+            </h1>
+
+            <p class="hero-subhead">
+              Gentle reminders and a 10-second daily check-in for you and your partner. Nothing new to install.
+            </p>
+
+            <div class="hero-cta-wrapper">
+              <a href="#waitlist-form" class="btn-coral">
+                <span>Join the waitlist with your partner</span>
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+
+              <div class="hero-guarantee">
+                <svg class="svg-icon" style="color: var(--secondary-sage); width: 16px; height: 16px;" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Zero spying &bull; Mutual opt-in</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Responsive WebP Mockup in the open space -->
+          <div class="hero-right-space">
+            <div class="hero-phone-mockup">
+              <picture>
+                <source media="(max-width: 640px)"
+                        srcset="images/phone-solo-360.webp 1x, images/phone-solo-720.webp 2x"
+                        width="360" height="669">
+                <img src="images/phones-duo-800.webp"
+                     srcset="images/phones-duo-800.webp 800w, images/phones-duo-1600.webp 1600w"
+                     sizes="(min-width: 1024px) 720px, 92vw"
+                     width="1600" height="1015"
+                     alt="StayClose on a Galaxy Z Fold, folded and unfolded, showing a daily check-in and a gentle nudge"
+                     decoding="async" fetchpriority="high">
+              </picture>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Card Bottom Bar (Echoing the audio/social bar of the Neonix UI) -->
+        <div class="card-bottom-bar">
+          <div class="card-bottom-left">
+            <span class="pulse-dot"></span>
+            <span>Batch 01 &bull; Rolling Invites</span>
+          </div>
+          <div class="card-bottom-socials">
+            <span>MUTUAL</span>
+            <span>&bull;</span>
+            <span>ENCRYPTED</span>
+            <span>&bull;</span>
+            <span>NO ADS</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 2. PROBLEM (3 relatable lines) -->
+  <!-- ========================================================================= -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="problem-header">
+        <span class="section-eyebrow">The Reality of Modern Life</span>
+        <h2 class="section-title">How distance creeps in without either of you noticing</h2>
+      </div>
+
+      <div class="problem-grid">
+        
+        <div class="problem-card">
+          <span class="problem-number">01</span>
+          <p class="problem-line">
+            You love each other deeply, but between work, chores, and exhaustion, full weeks slip by without one meaningful conversation.
+          </p>
+        </div>
+
+        <div class="problem-card">
+          <span class="problem-number">02</span>
+          <p class="problem-line">
+            You silently assume your partner knows how much you care, while the small daily appreciations go unsaid and unheard.
+          </p>
+        </div>
+
+        <div class="problem-card">
+          <span class="problem-number">03</span>
+          <p class="problem-line">
+            Shared calendar alerts feel cold, messaging apps are cluttered with errands, and therapy apps feel like heavy homework.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. HOW IT WORKS (3 steps) -->
+  <!-- ========================================================================= -->
+  <section class="how-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 640px; margin: 0 auto;">
+        <span class="section-eyebrow">Simple &amp; Low-Pressure</span>
+        <h2 class="section-title">Three gentle steps to staying anchored</h2>
+      </div>
+
+      <div class="steps-grid">
+        
+        <div class="step-card">
+          <div class="step-pill">1</div>
+          <h3>Add your partner</h3>
+          <p>
+            Add your partner (optional: drop your WhatsApp number to join the early test).
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-pill">2</div>
+          <h3>Tell us what matters</h3>
+          <p>
+            Tell us what matters to them: exams, birthdays, hard weeks.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-pill">3</div>
+          <h3>Gentle in-chat nudges</h3>
+          <p>
+            Get gentle nudges in the chat you already use.
+          </p>
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="#waitlist-form" class="btn-coral">
+          <span>Join the waitlist with your partner</span>
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. FEATURES (4 cards) -->
+  <!-- ========================================================================= -->
+  <section class="features-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 640px; margin: 0 auto;">
+        <span class="section-eyebrow">Intentional Design</span>
+        <h2 class="section-title">Built for real relationship rhythm</h2>
+      </div>
+
+      <div class="features-grid">
+        
+        <!-- Card 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Micro-Moments &amp; Check-ins</h3>
+          <p>
+            Gentle prompts designed to spark laughter, vulnerability, and reminiscing—without feeling like an intimidating counseling session.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>The Partner Memory Vault</h3>
+          <p>
+            Keep track of favorite comfort takeout, coffee orders, shoe sizes, and favorite stories so you never have to ask "wait, what was it again?".
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Shared Date Wishlist</h3>
+          <p>
+            Save restaurants, weekend getaways, and ideas you both want to try. Tap the randomizer whenever you're stuck on "I don't know, what do you want?".
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <h3>Surprise Appreciation Notes</h3>
+          <p>
+            Leave sweet digital notes that unlock during your partner's commute or when they're having a particularly exhausting workday.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. TRUST BLOCK -->
+  <!-- ========================================================================= -->
+  <section class="trust-section">
+    <div class="container">
+      <div class="trust-box">
+        <div class="trust-badge-icon">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width: 28px; height: 28px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 class="trust-statement">
+          Both of you opt in. Both of you see the same things. We never read your chats with each other, only what you send to us.
+        </h2>
+        <p class="trust-sub">
+          StayClose is built on mutual respect and radical privacy. No third-party ad tracking, no location trackers, and zero features designed to spy on each other.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6. FOUNDER NOTE -->
+  <!-- ========================================================================= -->
+  <section class="founder-section">
+    <div class="container-narrow">
+      <div class="founder-card">
+        <div class="founder-quote-mark">“</div>
+        <div class="founder-body">
+          <p style="margin-bottom: 16px;">
+            My partner and I were together for six years when we realized our text messages had turned into a never-ending grocery list and coordination chore.
+          </p>
+          <p style="margin-bottom: 16px;">
+            "Did you feed the dog?" "Who's grabbing groceries?" "Can you pay the gas bill?"
+          </p>
+          <p>
+            We didn't fall out of love; we just let the mundane logistics of adult life take over. We built StayClose to give couples a quiet, beautiful corner on their phones—a sanctuary that gently brings warmth, appreciation, and curiosity back into the everyday routine.
+          </p>
+        </div>
+        <div class="founder-signoff">
+          <div class="founder-avatar">
+            <svg class="svg-icon" style="width: 24px; height: 24px; color: var(--highlight-gold);" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="founder-meta">
+            <strong>Julian &amp; Clara</strong>
+            <span>Creators of StayClose</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 7. WAITLIST FORM -->
+  <!-- ========================================================================= -->
+  <section id="waitlist-form" class="waitlist-section">
+    <div class="container">
+      <div class="form-wrapper">
+        
+        <div class="form-header">
+          <span class="section-eyebrow">Priority Access</span>
+          <h2 class="section-title">Join the Early Couples Cohort</h2>
+          <p>We're opening spots in small batches to preserve a calm, high-touch experience.</p>
+        </div>
+
+        <!-- The Interactive Form -->
+        <form id="couplesWaitlistForm" onsubmit="handleWaitlistSubmit(event)">
+          
+          <!-- Anti-Spam Honeypot Field -->
+          <div class="honeypot-field">
+            <label for="honeypot_check">Leave this empty</label>
+            <input type="text" id="honeypot_check" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <!-- Hidden Variant Field (a, b, or c) -->
+          <input type="hidden" id="variantInput" name="variant" value="b">
+
+          <!-- Email (Required) -->
+          <div class="form-group">
+            <label class="form-label" for="userEmail">Your Email Address *</label>
+            <input type="email" id="userEmail" name="email" class="form-input" required placeholder="you@example.com" autocomplete="email">
+            <div id="emailError" class="field-error-msg"></div>
+          </div>
+
+          <!-- WhatsApp Number (Optional) with International Flag Dropdown -->
+          <div class="form-group">
+            <label class="form-label" for="userWhatsapp">Want to join the early WhatsApp test? Add your number (optional)</label>
+            
+            <div class="phone-input-group">
+              <button type="button" class="country-select-btn" id="countrySelectBtn" aria-haspopup="listbox" aria-expanded="false" title="Choose country code">
+                <img id="selectedCountryFlag" src="images/flags/ng.png" alt="Nigeria" class="flag-icon" width="22" height="16">
+                <span id="selectedCountryCode">+234</span>
+                <svg class="dropdown-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              
+              <input type="tel" inputmode="tel" id="userWhatsapp" name="whatsapp" class="form-input phone-number-input" placeholder="+234 801 234 5678" autocomplete="tel">
+              
+              <!-- Country Dropdown Menu -->
+              <div class="country-dropdown-menu" id="countryDropdownMenu" role="listbox" style="display: none;">
+                <div class="country-search-box">
+                  <input type="text" id="countrySearchInput" placeholder="Search by country or number (+234, 44, Ghana)..." autocomplete="off">
+                </div>
+                <ul class="country-list" id="countryList">
+                  <!-- Populated by JS -->
+                </ul>
+              </div>
+            </div>
+
+            <div id="phoneError" class="field-error-msg"></div>
+            
+            <div class="consent-wrapper" style="margin-top: 10px; margin-bottom: 0;">
+              <input type="checkbox" id="whatsappConsent" name="whatsapp_consent" class="consent-checkbox">
+              <label for="whatsappConsent" style="font-size: 0.82rem; color: var(--text-muted);">
+                I agree to receive WhatsApp messages about the StayClose early test.
+              </label>
+            </div>
+            <div id="consentError" class="field-error-msg" style="margin-top: 6px;">Please tick the box to receive WhatsApp messages, or clear your number.</div>
+          </div>
+
+          <!-- Partner Contact (Optional) -->
+          <div class="form-group">
+            <label class="form-label" for="partnerContact">Partner's contact <span style="font-weight: 400; color: var(--text-muted);">(Optional — email or WhatsApp)</span></label>
+            <input type="text" id="partnerContact" name="partner_contact" class="form-input" placeholder="partner@example.com or +234..." autocomplete="off">
+          </div>
+
+          <!-- Relationship Type -->
+          <div class="form-group">
+            <label class="form-label" for="relationshipType">Where are you in your journey? <span style="font-weight: 400; color: var(--text-muted);">(Optional)</span></label>
+            <select id="relationshipType" name="relationship_type" class="form-select">
+              <option value="" selected>Select relationship status (optional)</option>
+              <option value="dating">Dating / Together</option>
+              <option value="married">Married / Life Partners</option>
+              <option value="long-distance">Long-Distance Relationship</option>
+            </select>
+          </div>
+
+          <!-- Question: Hardest part of staying connected -->
+          <div class="form-group">
+            <label class="form-label" for="hardestPart">What's the hardest part of staying connected with your partner?</label>
+            <textarea id="hardestPart" name="hardest_part" class="form-textarea" placeholder="e.g., Busy work schedules, running out of new things to talk about, fatigue in the evenings..."></textarea>
+          </div>
+
+          <!-- General Form Error Message -->
+          <div id="formGeneralError" class="field-error-msg" style="margin-bottom: 14px; text-align: center;"></div>
+
+          <!-- Submit Button with loading state -->
+          <button type="submit" id="submitBtn" class="btn-coral" style="width: 100%;">
+            <span id="btnText">Join the waitlist with your partner</span>
+          </button>
+
+          <p style="text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-top: 14px;">
+            We'll only use your details to contact you about StayClose.
+          </p>
+
+        </form>
+
+        <!-- Instant Success Message (Hidden by default) -->
+        <div id="successCard" class="success-card">
+          <div class="success-icon">
+            <svg class="svg-icon" style="width: 32px; height: 32px; color: var(--secondary-sage-dark);" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 style="font-size: 1.8rem; margin-bottom: 8px;">You're on the list!</h3>
+          <p style="font-size: 1.05rem; max-width: 440px; margin: 0 auto; color: var(--text-muted);">
+            We've saved your spot for early access. Since StayClose is meant for two, invite your partner so you can be paired the day we launch.
+          </p>
+
+          <button type="button" class="share-partner-btn" onclick="shareWithPartner()">
+            <span>Send this to your partner</span>
+            <svg class="svg-icon" style="width: 18px; height: 18px;" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </button>
+          
+          <div id="shareStatus" style="font-size: 0.85rem; color: var(--secondary-sage-dark); margin-top: 12px; font-weight: 600;"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 8. FREQUENTLY ASKED QUESTIONS -->
+  <!-- ========================================================================= -->
+  <section class="faq-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 640px; margin: 0 auto;">
+        <span class="section-eyebrow">Clear Answers</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list">
+        
+        <div class="faq-item">
+          <button class="faq-question" type="button" onclick="toggleFaq(this)">
+            <span>Do we both need to install anything?</span>
+            <span class="faq-chevron">
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            No. It works inside WhatsApp.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" onclick="toggleFaq(this)">
+            <span>Is this spying?</span>
+            <span class="faq-chevron">
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            No. We never read your chats with each other. We only see what you send to StayClose, and you both see the same things.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" onclick="toggleFaq(this)">
+            <span>How much time does StayClose take each day?</span>
+            <span class="faq-chevron">
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            Less than 60 seconds. Our philosophy is minimal screen time with maximum real-world emotional payoff. You answer a prompt, check a note, and put your phone down to be together.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" type="button" onclick="toggleFaq(this)">
+            <span>When will the early beta begin?</span>
+            <span class="faq-chevron">
+              <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            We are rolling out invitations to waitlist members on a rolling basis. Partners who join together receive priority access.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 9. FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; font-weight: 800; font-size: 1.25rem;">
+        <svg class="svg-icon" style="color: var(--accent-coral);" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>StayClose</span>
+      </div>
+      <p style="font-size: 0.88rem;">A shared, mutual sanctuary for couples.</p>
+
+      <div class="footer-links">
+        <a href="#waitlist-form">Join Waitlist</a>
+        <a href="#waitlist-form">Privacy Promise</a>
+        <a href="#waitlist-form">Contact Creators</a>
+      </div>
+
+      <p style="font-size: 0.8rem; color: #9A8A9E;">
+        &copy; <span id="yearSpan">2026</span> StayClose. Both partners opt in. Both see the same thing. We never read your messages.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- STICKY MOBILE CTA -->
+  <!-- ========================================================================= -->
+  <div class="sticky-mobile-cta">
+    <a href="#waitlist-form" class="btn-coral">
+      <span>Join the waitlist with your partner</span>
+      <svg class="svg-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: HIGH-DPI CANVAS + GOOGLE APPS SCRIPT SUBMISSION -->
+  <!-- ========================================================================= -->
+  <script>
+    // ========================================================================
+    // 1. GOOGLE APPS SCRIPT ENDPOINT
+    // ========================================================================
+    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzLeAGg0Jqn5qjQ3-47F1HjW-Ds3z732-ysQLoJWSm6F6XAsfUcurVDmvZrMWpi1ezM/exec';
+
+    // Auto-update footer year
+    document.getElementById('yearSpan').innerText = new Date().getFullYear();
+
+    // ========================================================================
+    // HERO COPY VARIANTS (?v=a|b|c)
+    // ========================================================================
+    const HERO_VARIANTS = {
+      a: {
+        headline: "Love doesn't fade. It gets forgotten in the busy weeks.",
+        subhead: "StayClose notices when you two haven't really connected and nudges you back. Mutual, private, no spying."
+      },
+      b: {
+        headline: "Stay close to them, right inside WhatsApp.",
+        subhead: "Gentle reminders and a 10-second daily check-in for you and your partner. Nothing new to install."
+      },
+      c: {
+        headline: "A relationship app you both actually use.",
+        subhead: "One shared space for the dates, moments, and little things that matter to both of you."
+      }
+    };
+
+    function initHeroVariant() {
+      const params = new URLSearchParams(window.location.search);
+      const v = (params.get('v') || 'b').toLowerCase();
+      const selectedVariant = HERO_VARIANTS[v] ? v : 'b';
+      const variantData = HERO_VARIANTS[selectedVariant];
+
+      const headlineEl = document.querySelector('.hero-headline');
+      const subheadEl = document.querySelector('.hero-subhead');
+      const variantInput = document.getElementById('variantInput');
+
+      if (headlineEl) headlineEl.innerText = variantData.headline;
+      if (subheadEl) subheadEl.innerText = variantData.subhead;
+      if (variantInput) variantInput.value = selectedVariant;
+    }
+    initHeroVariant();
+
+    // ========================================================================
+    // 2. QUALITY RULES HERO CANVAS IMPLEMENTATION
+    // ========================================================================
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.parentElement.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+
+      ctx.fillStyle = '#FFF8F1';
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    let debounceTimer;
+    function handleResize() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(resizeCanvas, 100);
+    }
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('orientationchange', handleResize, { passive: true });
+
+    resizeCanvas();
+
+    // Concentric luminous arcs flowing behind the glass card
+    let time = 0;
+    const waves = [
+      { yOffsetRatio: 0.22, amplitude: 35, speed: 0.0009, rgb: '255, 122, 107', baseWidth: 3 },
+      { yOffsetRatio: 0.38, amplitude: 45, speed: 0.0013, rgb: '230, 48, 75', baseWidth: 3.5 },
+      { yOffsetRatio: 0.54, amplitude: 40, speed: 0.0011, rgb: '255, 145, 130', baseWidth: 2.8 },
+      { yOffsetRatio: 0.70, amplitude: 50, speed: 0.0008, rgb: '244, 194, 107', baseWidth: 2.5 }
+    ];
+
+    function drawGlowWave(wave) {
+      const yBase = height * wave.yOffsetRatio;
+      const phase = time * wave.speed;
+      
+      const cp1x = width * 0.25;
+      const cp1y = yBase + Math.sin(phase) * wave.amplitude;
+      const cp2x = width * 0.75;
+      const cp2y = yBase + Math.cos(phase * 1.2) * wave.amplitude;
+      const endX = width;
+      const endY = yBase + Math.sin(phase * 0.8) * (wave.amplitude * 0.6);
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      const scale = width > 768 ? 1.75 : 1.0;
+      const bWidth = wave.baseWidth * scale;
+
+      // Layer 1: Wide low opacity
+      ctx.beginPath();
+      ctx.moveTo(0, yBase);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+      ctx.lineWidth = bWidth * 5.5;
+      ctx.strokeStyle = `rgba(${wave.rgb}, ${width > 768 ? 0.12 : 0.06})`;
+      ctx.stroke();
+
+      // Layer 2: Medium glow
+      ctx.beginPath();
+      ctx.moveTo(0, yBase);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+      ctx.lineWidth = bWidth * 2.2;
+      ctx.strokeStyle = `rgba(${wave.rgb}, ${width > 768 ? 0.32 : 0.20})`;
+      ctx.stroke();
+
+      // Layer 3: Bright core
+      ctx.beginPath();
+      ctx.moveTo(0, yBase);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+      ctx.lineWidth = bWidth * 0.9;
+      ctx.strokeStyle = `rgba(${wave.rgb}, 0.92)`;
+      ctx.stroke();
+    }
+
+    function renderCanvasFrame() {
+      ctx.fillStyle = 'rgba(255, 248, 241, 0.15)';
+      ctx.fillRect(0, 0, width, height);
+
+      time += 16;
+      for (let i = 0; i < waves.length; i++) {
+        drawGlowWave(waves[i]);
+      }
+
+      requestAnimationFrame(renderCanvasFrame);
+    }
+
+    renderCanvasFrame();
+
+    // ========================================================================
+    // 3. FAQ ACCORDION TOGGLE
+    // ========================================================================
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // ========================================================================
+    // 4. COUNTRY CODE SELECTOR DROPDOWN (International Flags & Codes)
+    // ========================================================================
+    const COUNTRIES = [
+      // Top African & Regional
+      { code: 'ng', name: 'Nigeria', dial: '+234', digits: 10, placeholder: '801 234 5678' },
+      { code: 'gh', name: 'Ghana', dial: '+233', digits: 9, placeholder: '20 123 4567' },
+      { code: 'ke', name: 'Kenya', dial: '+254', digits: 9, placeholder: '712 345678' },
+      { code: 'za', name: 'South Africa', dial: '+27', digits: 9, placeholder: '82 123 4567' },
+      { code: 'tz', name: 'Tanzania', dial: '+255', digits: 9, placeholder: '712 345 678' },
+      { code: 'zm', name: 'Zambia', dial: '+260', digits: 9, placeholder: '97 123 4567' },
+      { code: 'zw', name: 'Zimbabwe', dial: '+263', digits: 9, placeholder: '71 234 5678' },
+      { code: 'et', name: 'Ethiopia', dial: '+251', digits: 9, placeholder: '91 123 4567' },
+      { code: 'sn', name: 'Senegal', dial: '+221', digits: 9, placeholder: '77 123 45 67' },
+      { code: 'ci', name: 'Ivory Coast', dial: '+225', digits: 10, placeholder: '07 12 34 56 78' },
+      { code: 'sl', name: 'Sierra Leone', dial: '+232', digits: 8, placeholder: '76 123456' },
+      { code: 'lr', name: 'Liberia', dial: '+231', digits: 8, placeholder: '77 123 456' },
+      { code: 'rw', name: 'Rwanda', dial: '+250', digits: 9, placeholder: '788 123 456' },
+      { code: 'ug', name: 'Uganda', dial: '+256', digits: 9, placeholder: '772 123456' },
+      { code: 'cm', name: 'Cameroon', dial: '+237', digits: 9, placeholder: '6 71 23 45 67' },
+      { code: 'eg', name: 'Egypt', dial: '+20', digits: 10, placeholder: '100 123 4567' },
+
+      // Global Popular
+      { code: 'gb', name: 'United Kingdom', dial: '+44', digits: 10, placeholder: '7911 123456' },
+      { code: 'us', name: 'United States', dial: '+1', digits: 10, placeholder: '202 555 0123' },
+      { code: 'ca', name: 'Canada', dial: '+1', digits: 10, placeholder: '416 555 0199' },
+      { code: 'in', name: 'India', dial: '+91', digits: 10, placeholder: '98123 45678' },
+      { code: 'ae', name: 'United Arab Emirates', dial: '+971', digits: 9, placeholder: '50 123 4567' },
+      { code: 'sa', name: 'Saudi Arabia', dial: '+966', digits: 9, placeholder: '50 123 4567' },
+      { code: 'qa', name: 'Qatar', dial: '+974', digits: 8, placeholder: '3312 3456' },
+      { code: 'tr', name: 'Turkey', dial: '+90', digits: 10, placeholder: '532 123 4567' },
+      { code: 'pk', name: 'Pakistan', dial: '+92', digits: 10, placeholder: '300 1234567' },
+      { code: 'bd', name: 'Bangladesh', dial: '+880', digits: 10, placeholder: '1712 345678' },
+      { code: 'ph', name: 'Philippines', dial: '+63', digits: 10, placeholder: '917 123 4567' },
+      { code: 'de', name: 'Germany', dial: '+49', digits: 10, placeholder: '151 23456789' },
+      { code: 'fr', name: 'France', dial: '+33', digits: 9, placeholder: '6 12 34 56 78' },
+      { code: 'es', name: 'Spain', dial: '+34', digits: 9, placeholder: '612 34 56 78' },
+      { code: 'it', name: 'Italy', dial: '+39', digits: 10, placeholder: '312 345 6789' },
+      { code: 'ie', name: 'Ireland', dial: '+353', digits: 9, placeholder: '85 123 4567' },
+      { code: 'nl', name: 'Netherlands', dial: '+31', digits: 9, placeholder: '6 12345678' },
+      { code: 'pl', name: 'Poland', dial: '+48', digits: 9, placeholder: '512 345 678' },
+      { code: 'se', name: 'Sweden', dial: '+46', digits: 9, placeholder: '70 123 45 67' },
+      { code: 'au', name: 'Australia', dial: '+61', digits: 9, placeholder: '412 345 678' },
+      { code: 'nz', name: 'New Zealand', dial: '+64', digits: 9, placeholder: '21 123 4567' },
+      { code: 'br', name: 'Brazil', dial: '+55', digits: 11, placeholder: '11 91234 5678' },
+      { code: 'jm', name: 'Jamaica', dial: '+1876', digits: 7, placeholder: '876 123 4567' },
+      { code: 'tt', name: 'Trinidad and Tobago', dial: '+1868', digits: 7, placeholder: '868 123 4567' },
+
+      // Fallback for any other country worldwide
+      { code: 'un', name: 'Other / Worldwide', dial: '+', digits: 10, placeholder: 'Country code + phone number' }
+    ];
+
+    // ========================================================================
+    // VALIDATION HELPERS (Incomplete Email, Spelling Typos, Incomplete Phone)
+    // ========================================================================
+    function validateEmailInput(email) {
+      if (!email || !email.trim()) {
+        return { valid: false, message: 'Please enter your email address.' };
+      }
+      email = email.trim();
+      if (!email.includes('@')) {
+        return { valid: false, message: "Missing '@' in email address." };
+      }
+      const parts = email.split('@');
+      if (parts.length > 2 || !parts[0]) {
+        return { valid: false, message: "Please enter the username before '@'." };
+      }
+      const domain = parts[1];
+      if (!domain) {
+        return { valid: false, message: "Incomplete email: please enter the domain after '@' (e.g. gmail.com)." };
+      }
+      if (!domain.includes('.')) {
+        return { valid: false, message: "Incomplete email: please add a domain extension (e.g. .com or .co.uk)." };
+      }
+      const domainParts = domain.split('.');
+      const tld = domainParts[domainParts.length - 1];
+      if (!tld || tld.length < 2) {
+        return { valid: false, message: "Incomplete domain extension: please enter a valid ending (e.g. .com)." };
+      }
+
+      // Detect and suggest common domain spelling typos
+      const typos = {
+        'gmial.com': 'gmail.com', 'gamil.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmaill.com': 'gmail.com',
+        'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'yaho.co.uk': 'yahoo.co.uk',
+        'hotmial.com': 'hotmail.com', 'hotmaill.com': 'hotmail.com',
+        'outlok.com': 'outlook.com', 'outloo.com': 'outlook.com',
+        'iclud.com': 'icloud.com', 'icld.com': 'icloud.com'
+      };
+      if (typos[domain.toLowerCase()]) {
+        return { valid: false, message: `Did you mean ${parts[0]}@${typos[domain.toLowerCase()]}? Please check spelling.` };
+      }
+
+      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+      if (!emailRegex.test(email)) {
+        return { valid: false, message: 'Please enter a valid email address (e.g. you@example.com).' };
+      }
+      return { valid: true, message: '' };
+    }
+
+    function validatePhoneInput(rawPhone, countryObj) {
+      if (!rawPhone || !rawPhone.trim()) {
+        return { valid: true, fullPhone: '', message: '' }; // WhatsApp is optional
+      }
+
+      const clean = rawPhone.replace(/[\s\-\(\)\.]/g, '');
+
+      // Special handling when "Other / Worldwide (+)" is selected
+      if (countryObj && countryObj.dial === '+') {
+        const full = clean.startsWith('+') ? clean : '+' + clean;
+        const digits = full.slice(1);
+        if (!/^\d+$/.test(digits)) {
+          return { valid: false, message: 'Phone number can only contain digits after the +.' };
+        }
+        if (digits.length < 8) {
+          return { valid: false, message: 'Please enter a complete international number with country code (at least 8 digits).' };
+        }
+        if (digits.length > 15) {
+          return { valid: false, message: 'Phone number has too many digits (maximum 15 digits).' };
+        }
+        return { valid: true, fullPhone: full, message: '' };
+      }
+
+      if (clean.startsWith('+')) {
+        const digits = clean.slice(1);
+        if (!/^\d+$/.test(digits)) {
+          return { valid: false, message: 'Phone number can only contain digits after the +.' };
+        }
+        if (digits.length < 10) {
+          const missing = 10 - digits.length;
+          return { valid: false, message: `Incomplete number: international phone numbers require at least 10 digits (missing ${missing}).` };
+        }
+        if (digits.length > 15) {
+          return { valid: false, message: 'Phone number has too many digits (maximum 15 digits).' };
+        }
+        return { valid: true, fullPhone: clean, message: '' };
+      }
+
+      if (!/^\d+$/.test(clean)) {
+        return { valid: false, message: 'Please enter numbers only.' };
+      }
+
+      // National format: strip leading 0 if present (e.g. 08012345678 -> 8012345678)
+      const normalized = clean.startsWith('0') ? clean.slice(1) : clean;
+      const expected = countryObj ? (countryObj.digits || 10) : 10;
+      const countryName = countryObj ? countryObj.name : 'your country';
+      const placeholder = countryObj ? countryObj.placeholder : '801 234 5678';
+      const dial = countryObj ? countryObj.dial : '+234';
+
+      if (normalized.length < expected) {
+        const missing = expected - normalized.length;
+        return { 
+          valid: false, 
+          message: `Incomplete phone number: missing ${missing} digit${missing > 1 ? 's' : ''}. For ${countryName}, enter all ${expected} digits (e.g. ${placeholder}).` 
+        };
+      }
+
+      if (normalized.length > expected + 1) {
+        return { 
+          valid: false, 
+          message: `This number has too many digits for ${countryName} (expected ${expected} digits).` 
+        };
+      }
+
+      return { valid: true, fullPhone: dial + normalized, message: '' };
+    }
+
+    function initCountrySelector() {
+      const btn = document.getElementById('countrySelectBtn');
+      const menu = document.getElementById('countryDropdownMenu');
+      const list = document.getElementById('countryList');
+      const searchInput = document.getElementById('countrySearchInput');
+      const phoneInput = document.getElementById('userWhatsapp');
+      const flagImg = document.getElementById('selectedCountryFlag');
+      const codeSpan = document.getElementById('selectedCountryCode');
+
+      if (!btn || !menu || !list) return;
+
+      function applyCountrySelection(country) {
+        codeSpan.innerText = country.dial;
+        flagImg.src = `images/flags/${country.code}.png`;
+        flagImg.alt = country.name;
+        phoneInput.placeholder = country.placeholder;
+
+        closeDropdown();
+        phoneInput.focus();
+
+        if (phoneInput.value.trim()) {
+          const res = validatePhoneInput(phoneInput.value.trim(), country);
+          const phoneErrorEl = document.getElementById('phoneError');
+          if (!res.valid) {
+            phoneErrorEl.innerText = res.message;
+            phoneErrorEl.style.display = 'block';
+            phoneInput.classList.add('form-input-error');
+          } else {
+            phoneErrorEl.style.display = 'none';
+            phoneInput.classList.remove('form-input-error');
+          }
+        }
+      }
+
+      function renderList(filter = '') {
+        const query = filter.toLowerCase().trim();
+        const cleanQuery = query.replace(/^\+/, '');
+
+        // Search by country name, ISO code, or dial code (with or without '+')
+        const filtered = COUNTRIES.filter(c => {
+          if (!query) return true;
+          const nameMatch = c.name.toLowerCase().includes(query);
+          const codeMatch = c.code.toLowerCase().includes(query);
+          const dialMatch = c.dial.toLowerCase().includes(query);
+          const cleanDialMatch = c.dial.replace(/^\+/, '').includes(cleanQuery);
+          return nameMatch || codeMatch || dialMatch || (cleanQuery && cleanDialMatch);
+        });
+
+        if (filtered.length === 0) {
+          list.innerHTML = `
+            <li style="padding: 14px 12px; color: var(--text-muted); font-size: 0.88rem; text-align: center;">
+              No country found for "<strong>${filter}</strong>"<br>
+              <button type="button" id="useWorldwideBtn" style="margin-top: 10px; background: #FFFFFF; border: 1px solid var(--accent-coral); color: var(--accent-coral); padding: 6px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.82rem;">
+                Use Other / Worldwide (+)
+              </button>
+            </li>`;
+          const worldwideBtn = document.getElementById('useWorldwideBtn');
+          if (worldwideBtn) {
+            worldwideBtn.addEventListener('click', () => {
+              applyCountrySelection(COUNTRIES[COUNTRIES.length - 1]);
+            });
+          }
+          return;
+        }
+
+        const currentDial = codeSpan.innerText.trim();
+        list.innerHTML = filtered.map(c => `
+          <li class="country-item ${c.dial === currentDial && c.name.toLowerCase() === flagImg.alt.toLowerCase() ? 'selected' : ''}" 
+              data-code="${c.code}" data-dial="${c.dial}" data-name="${c.name}" data-placeholder="${c.placeholder}">
+            <div class="country-item-left">
+              <img src="images/flags/${c.code}.png" alt="${c.name}" class="flag-icon" width="22" height="16" loading="lazy">
+              <span class="country-name">${c.name}</span>
+            </div>
+            <span class="country-dial">${c.dial}</span>
+          </li>
+        `).join('');
+
+        list.querySelectorAll('.country-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const code = item.getAttribute('data-code');
+            const country = COUNTRIES.find(c => c.code === code) || COUNTRIES[0];
+            applyCountrySelection(country);
+          });
+        });
+      }
+
+      function openDropdown() {
+        menu.style.display = 'block';
+        btn.setAttribute('aria-expanded', 'true');
+        renderList('');
+        searchInput.value = '';
+        setTimeout(() => searchInput.focus(), 60);
+      }
+
+      function closeDropdown() {
+        menu.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = menu.style.display === 'block';
+        if (isOpen) closeDropdown();
+        else openDropdown();
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        renderList(e.target.value);
+      });
+
+      searchInput.addEventListener('click', (e) => e.stopPropagation());
+
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target) && !btn.contains(e.target)) {
+          closeDropdown();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.style.display === 'block') {
+          closeDropdown();
+          btn.focus();
+        }
+      });
+
+      renderList('');
+    }
+
+    initCountrySelector();
+
+    // Setup real-time blur and input listeners
+    const emailField = document.getElementById('userEmail');
+    const emailErrorBox = document.getElementById('emailError');
+    const phoneField = document.getElementById('userWhatsapp');
+    const phoneErrorBox = document.getElementById('phoneError');
+    const consentField = document.getElementById('whatsappConsent');
+    const consentErrorBox = document.getElementById('consentError');
+    const formGeneralError = document.getElementById('formGeneralError');
+
+    consentField.addEventListener('change', () => {
+      if (consentField.checked || !phoneField.value.trim()) {
+        consentErrorBox.style.display = 'none';
+      }
+    });
+
+    emailField.addEventListener('blur', () => {
+      const val = emailField.value.trim();
+      if (val) {
+        const res = validateEmailInput(val);
+        if (!res.valid) {
+          emailErrorBox.innerText = res.message;
+          emailErrorBox.style.display = 'block';
+          emailField.classList.add('form-input-error');
+        } else {
+          emailErrorBox.style.display = 'none';
+          emailField.classList.remove('form-input-error');
+        }
+      }
+    });
+
+    emailField.addEventListener('input', () => {
+      if (emailErrorBox.style.display === 'block') {
+        const res = validateEmailInput(emailField.value.trim());
+        if (res.valid) {
+          emailErrorBox.style.display = 'none';
+          emailField.classList.remove('form-input-error');
+        }
+      }
+    });
+
+    phoneField.addEventListener('blur', () => {
+      const val = phoneField.value.trim();
+      if (val) {
+        const currentDial = document.getElementById('selectedCountryCode').innerText.trim();
+        const country = COUNTRIES.find(c => c.dial === currentDial) || COUNTRIES[0];
+        const res = validatePhoneInput(val, country);
+        if (!res.valid) {
+          phoneErrorBox.innerText = res.message;
+          phoneErrorBox.style.display = 'block';
+          phoneField.classList.add('form-input-error');
+        } else {
+          phoneErrorBox.style.display = 'none';
+          phoneField.classList.remove('form-input-error');
+        }
+      }
+    });
+
+    phoneField.addEventListener('input', () => {
+      if (!phoneField.value.trim()) {
+        consentErrorBox.style.display = 'none';
+      }
+      if (phoneErrorBox.style.display === 'block') {
+        const currentDial = document.getElementById('selectedCountryCode').innerText.trim();
+        const country = COUNTRIES.find(c => c.dial === currentDial) || COUNTRIES[0];
+        const res = validatePhoneInput(phoneField.value.trim(), country);
+        if (res.valid) {
+          phoneErrorBox.style.display = 'none';
+          phoneField.classList.remove('form-input-error');
+        }
+      }
+    });
+
+    // ========================================================================
+    // 5. WAITLIST FORM SUBMISSION (Validation, Loading State, Instant Success)
+    // ========================================================================
+    async function handleWaitlistSubmit(event) {
+      event.preventDefault();
+
+      const honeypot = document.getElementById('honeypot_check').value;
+      if (honeypot) {
+        console.warn('Bot blocked.');
+        showSuccessState();
+        return;
+      }
+
+      formGeneralError.style.display = 'none';
+      consentErrorBox.style.display = 'none';
+
+      // 1. Validate Email (Required)
+      const emailVal = emailField.value.trim();
+      const emailRes = validateEmailInput(emailVal);
+      if (!emailRes.valid) {
+        emailErrorBox.innerText = emailRes.message;
+        emailErrorBox.style.display = 'block';
+        emailField.classList.add('form-input-error');
+        emailField.focus();
+        return;
+      } else {
+        emailErrorBox.style.display = 'none';
+        emailField.classList.remove('form-input-error');
+      }
+
+      // 2. Validate WhatsApp Number & Consent (Optional number; consent required if entered)
+      const rawUserPhone = phoneField.value.trim();
+      let strippedPhone = '';
+
+      if (rawUserPhone) {
+        if (!consentField.checked) {
+          consentErrorBox.style.display = 'block';
+          consentField.focus();
+          return;
+        }
+
+        const currentDial = document.getElementById('selectedCountryCode').innerText.trim();
+        const currentCountry = COUNTRIES.find(c => c.dial === currentDial) || COUNTRIES[0];
+        const phoneRes = validatePhoneInput(rawUserPhone, currentCountry);
+
+        if (!phoneRes.valid) {
+          phoneErrorBox.innerText = phoneRes.message;
+          phoneErrorBox.style.display = 'block';
+          phoneField.classList.add('form-input-error');
+          phoneField.focus();
+          return;
+        } else {
+          phoneErrorBox.style.display = 'none';
+          phoneField.classList.remove('form-input-error');
+          // Strip spaces and dashes from the number before sending
+          strippedPhone = phoneRes.fullPhone.replace(/[\s\-]/g, '');
+        }
+      } else {
+        phoneErrorBox.style.display = 'none';
+        phoneField.classList.remove('form-input-error');
+      }
+
+      const form = document.getElementById('couplesWaitlistForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+
+      submitBtn.disabled = true;
+      btnText.innerHTML = '<span class="spinner"></span> Securing your spot...';
+
+      function resetButtonState() {
+        submitBtn.disabled = false;
+        btnText.innerText = 'Join the waitlist with your partner';
+      }
+
+      // Build FormData with all fields
+      const formData = new FormData(form);
+      formData.set('email', emailVal);
+      formData.set('whatsapp', strippedPhone);
+      formData.set('whatsapp_consent', consentField.checked ? 'yes' : '');
+      formData.set('variant', document.getElementById('variantInput').value || 'b');
+      if (!formData.has('partner_contact')) formData.set('partner_contact', document.getElementById('partnerContact').value.trim());
+      if (!formData.has('relationship_type')) formData.set('relationship_type', document.getElementById('relationshipType').value);
+      if (!formData.has('hardest_part')) formData.set('hardest_part', document.getElementById('hardestPart').value.trim());
+      if (!formData.has('website')) formData.set('website', '');
+
+      try {
+        const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: new URLSearchParams(formData)
+        });
+
+        const data = await response.json();
+        if (data && data.ok === true) {
+          showSuccessState();
+        } else if (data && data.error === 'invalid_email') {
+          emailErrorBox.innerText = 'Please check your email address.';
+          emailErrorBox.style.display = 'block';
+          emailField.classList.add('form-input-error');
+          emailField.focus();
+          resetButtonState();
+        } else {
+          formGeneralError.innerText = 'Something went wrong. Please try again.';
+          formGeneralError.style.display = 'block';
+          resetButtonState();
+        }
+      } catch (err) {
+        console.error('Waitlist submission error:', err);
+        formGeneralError.innerText = 'Something went wrong. Please try again.';
+        formGeneralError.style.display = 'block';
+        resetButtonState();
+      }
+    }
+
+    function showSuccessState() {
+      document.getElementById('couplesWaitlistForm').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('waitlist-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ========================================================================
+    // 6. SEND TO PARTNER SHARE BUTTON
+    // ========================================================================
+    function shareWithPartner() {
+      const shareData = {
+        title: 'StayClose — For Couples',
+        text: 'I just joined the early waitlist for StayClose, a private app for couples. Come join with me so we get paired at launch!',
+        url: window.location.href
+      };
+
+      const statusEl = document.getElementById('shareStatus');
+
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => {
+            statusEl.innerText = 'Shared with love!';
+          })
+          .catch(() => {
+            copyShareFallback(statusEl);
+          });
+      } else {
+        copyShareFallback(statusEl);
+      }
+    }
+
+    function copyShareFallback(statusEl) {
+      const text = "I just joined the early waitlist for StayClose, a private couples app. Come join with me: " + window.location.href;
+      navigator.clipboard.writeText(text).then(() => {
+        statusEl.innerText = 'Invite link copied to clipboard! Paste it to your partner.';
+      }).catch(() => {
+        statusEl.innerText = 'Link: ' + window.location.href;
+      });
+    }
+  </script>
+</body>
+</html>
