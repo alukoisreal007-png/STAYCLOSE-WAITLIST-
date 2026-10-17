@@ -21,6 +21,7 @@
   <meta property="og:title" content="StayClose: stay close to them, right inside WhatsApp">
   <meta property="og:description" content="Gentle reminders and a 10-second daily check-in for you and your partner. Mutual, private, no spying.">
   <meta property="og:image" content="https://stayclose-waitlist.vercel.app/images/stayclose-app-icon-1024.png">
+  <meta property="og:image:alt" content="StayClose app icon">
   <meta property="og:image:width" content="1024">
   <meta property="og:image:height" content="1024">
 
@@ -1312,12 +1313,12 @@
         <div class="card-bottom-bar">
           <div class="card-bottom-left">
             <span class="pulse-dot"></span>
-            <span>Batch 01 &bull; Rolling Invites</span>
+            <span>Early test &bull; Small group</span>
           </div>
           <div class="card-bottom-socials">
             <span>MUTUAL</span>
             <span>&bull;</span>
-            <span>ENCRYPTED</span>
+            <span>PRIVATE</span>
             <span>&bull;</span>
             <span>NO ADS</span>
           </div>
@@ -1451,7 +1452,7 @@
           <div class="feature-icon-box">
             <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <h3>Shared Date Wishlist</h3>
+          <h3>Shared Date Wishlist <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); background: rgba(43, 27, 46, 0.07); padding: 2px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle;">Coming later</span></h3>
           <p>
             Save restaurants, weekend getaways, and ideas you both want to try. Tap the randomizer whenever you're stuck on "I don't know, what do you want?".
           </p>
@@ -1462,7 +1463,7 @@
           <div class="feature-icon-box">
             <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
-          <h3>Surprise Appreciation Notes</h3>
+          <h3>Surprise Appreciation Notes <span style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); background: rgba(43, 27, 46, 0.07); padding: 2px 8px; border-radius: 99px; margin-left: 6px; vertical-align: middle;">Coming later</span></h3>
           <p>
             Leave sweet digital notes that unlock during your partner's commute or when they're having a particularly exhausting workday.
           </p>
@@ -1485,7 +1486,7 @@
           Both of you opt in. Both of you see the same things. We never read your chats with each other, only what you send to us.
         </h2>
         <p class="trust-sub">
-          StayClose is built on mutual respect and radical privacy. No third-party ad tracking, no location trackers, and zero features designed to spy on each other.
+          No ads. We never read your chats with each other.
         </p>
       </div>
     </div>
@@ -1498,24 +1499,24 @@
     <div class="container-narrow">
       <div class="founder-card">
         <div class="founder-quote-mark">“</div>
+        <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 16px; color: var(--text-main);">Why I'm building StayClose</h3>
         <div class="founder-body">
           <p style="margin-bottom: 16px;">
-            My partner and I were together for six years when we realized our text messages had turned into a never-ending grocery list and coordination chore.
+            Hi, I'm [YOUR NAME], a developer and content creator in Ibadan.
           </p>
           <p style="margin-bottom: 16px;">
-            "Did you feed the dog?" "Who's grabbing groceries?" "Can you pay the gas bill?"
+            [ONE OR TWO HONEST SENTENCES ABOUT WHY YOU'RE BUILDING THIS.]
           </p>
           <p>
-            We didn't fall out of love; we just let the mundane logistics of adult life take over. We built StayClose to give couples a quiet, beautiful corner on their phones—a sanctuary that gently brings warmth, appreciation, and curiosity back into the everyday routine.
+            The early test is small on purpose. At first I'll be sending the reminders myself, and if you join, you'll hear from me directly.
           </p>
         </div>
         <div class="founder-signoff">
-          <div class="founder-avatar">
+          <div class="founder-avatar" style="display: none;">
             <svg class="svg-icon" style="width: 24px; height: 24px; color: var(--highlight-gold);" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
           <div class="founder-meta">
-            <strong>Julian &amp; Clara</strong>
-            <span>Creators of StayClose</span>
+            <strong>[YOUR NAME], StayClose</strong>
           </div>
         </div>
       </div>
@@ -1532,14 +1533,14 @@
         <div class="form-header">
           <span class="section-eyebrow">Priority Access</span>
           <h2 class="section-title">Join the Early Couples Cohort</h2>
-          <p>We're opening spots in small batches to preserve a calm, high-touch experience.</p>
+          <p>We're starting with a small group so we can listen closely and improve fast.</p>
         </div>
 
         <!-- The Interactive Form -->
         <form id="couplesWaitlistForm" onsubmit="handleWaitlistSubmit(event)">
           
           <!-- Anti-Spam Honeypot Field -->
-          <div class="honeypot-field">
+          <div class="honeypot-field" aria-hidden="true">
             <label for="honeypot_check">Leave this empty</label>
             <input type="text" id="honeypot_check" name="website" tabindex="-1" autocomplete="off">
           </div>
@@ -1550,7 +1551,7 @@
           <!-- Email (Required) -->
           <div class="form-group">
             <label class="form-label" for="userEmail">Your Email Address *</label>
-            <input type="email" id="userEmail" name="email" class="form-input" required placeholder="you@example.com" autocomplete="email">
+            <input type="email" id="userEmail" name="email" class="form-input" required placeholder="you@email.com" autocomplete="email">
             <div id="emailError" class="field-error-msg"></div>
           </div>
 
@@ -1592,7 +1593,7 @@
           <!-- Partner Contact (Optional) -->
           <div class="form-group">
             <label class="form-label" for="partnerContact">Partner's contact <span style="font-weight: 400; color: var(--text-muted);">(Optional — email or WhatsApp)</span></label>
-            <input type="text" id="partnerContact" name="partner_contact" class="form-input" placeholder="partner@example.com or +234..." autocomplete="off">
+            <input type="text" id="partnerContact" name="partner_contact" class="form-input" placeholder="partner@email.com or +234..." autocomplete="off">
           </div>
 
           <!-- Relationship Type -->
@@ -2000,7 +2001,7 @@
 
       const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
       if (!emailRegex.test(email)) {
-        return { valid: false, message: 'Please enter a valid email address (e.g. you@example.com).' };
+        return { valid: false, message: 'Please enter a valid email address (e.g. you@email.com).' };
       }
       return { valid: true, message: '' };
     }
@@ -2363,8 +2364,9 @@
       const isHosted = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
       const primaryUrl = isHosted ? '/api/submit' : GOOGLE_APPS_SCRIPT_URL;
 
+      let response;
+      let rawResponseText = '';
       try {
-        let response;
         try {
           response = await fetch(primaryUrl, {
             method: 'POST',
@@ -2381,24 +2383,34 @@
           }
         }
 
-        const data = await response.json();
+        rawResponseText = await response.text();
+        let data;
+        try {
+          data = JSON.parse(rawResponseText);
+        } catch (parseErr) {
+          data = null;
+        }
+
         if (data && (data.ok === true || data.duplicate === true)) {
           showSuccessState();
         } else if (data && data.error === 'invalid_email') {
+          console.error('Waitlist submission rejected (invalid_email):', response.status, rawResponseText);
           emailErrorBox.innerText = 'Please check your email address.';
           emailErrorBox.style.display = 'block';
           emailField.classList.add('form-input-error');
           emailField.focus();
           resetButtonState();
         } else {
+          console.error('Waitlist submission failed:', response ? response.status : 'No response', rawResponseText);
           formGeneralError.innerText = 'Something went wrong. Please try again.';
           formGeneralError.style.display = 'block';
           resetButtonState();
         }
       } catch (err) {
-        console.warn('Waitlist submission notice:', err);
-        // If data was dispatched with valid email, assume success to prevent blocking user on browser redirect issues
-        showSuccessState();
+        console.error('Waitlist submission error:', response ? response.status : 'Network failure', rawResponseText || err.message || err);
+        formGeneralError.innerText = 'Something went wrong. Please try again.';
+        formGeneralError.style.display = 'block';
+        resetButtonState();
       }
     }
 
@@ -2412,34 +2424,29 @@
     // 6. SEND TO PARTNER SHARE BUTTON
     // ========================================================================
     function shareWithPartner() {
-      const shareData = {
-        title: 'StayClose — For Couples',
-        text: 'I just joined the early waitlist for StayClose, a private app for couples. Come join with me so we get paired at launch!',
-        url: window.location.href
-      };
-
+      const shareUrl = 'https://stayclose-waitlist.vercel.app/';
+      const shareMessage = 'I found something for us: StayClose, a private 10-second daily check-in for couples, right inside WhatsApp. Join the early test with me: https://stayclose-waitlist.vercel.app/';
+      const waFallback = 'https://wa.me/?text=' + encodeURIComponent(shareMessage);
       const statusEl = document.getElementById('shareStatus');
 
       if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => {
-            statusEl.innerText = 'Shared with love!';
-          })
-          .catch(() => {
-            copyShareFallback(statusEl);
-          });
+        navigator.share({
+          title: 'StayClose',
+          text: shareMessage,
+          url: shareUrl
+        })
+        .then(() => {
+          if (statusEl) statusEl.innerText = 'Shared with love!';
+        })
+        .catch((err) => {
+          if (err && err.name === 'AbortError') return;
+          if (statusEl) statusEl.innerText = 'Opening WhatsApp to share with your partner...';
+          window.open(waFallback, '_blank', 'noopener,noreferrer');
+        });
       } else {
-        copyShareFallback(statusEl);
+        if (statusEl) statusEl.innerText = 'Opening WhatsApp to share with your partner...';
+        window.open(waFallback, '_blank', 'noopener,noreferrer');
       }
-    }
-
-    function copyShareFallback(statusEl) {
-      const text = "I just joined the early waitlist for StayClose, a private couples app. Come join with me: " + window.location.href;
-      navigator.clipboard.writeText(text).then(() => {
-        statusEl.innerText = 'Invite link copied to clipboard! Paste it to your partner.';
-      }).catch(() => {
-        statusEl.innerText = 'Link: ' + window.location.href;
-      });
     }
   </script>
 </body>
