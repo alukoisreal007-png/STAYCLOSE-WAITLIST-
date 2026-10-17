@@ -7,6 +7,12 @@ const PUBLIC_DIR = __dirname;
 
 const server = http.createServer((req, res) => {
   let reqPath = req.url === '/' ? '/index.html' : req.url.split('?')[0];
+
+  if (reqPath === '/api/submit') {
+    const handler = require('./api/submit.js');
+    return handler(req, res);
+  }
+
   let filePath = path.join(PUBLIC_DIR, decodeURIComponent(reqPath));
 
   fs.readFile(filePath, (err, data) => {
